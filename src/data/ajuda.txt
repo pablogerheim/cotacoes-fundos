@@ -1,0 +1,50 @@
+ <lu>${data.reports.map(
+  e1 => {
+    if (!e1.investmentId == e.id) {
+    }
+    // eslint-disable-next-line no-unused-expressions
+    `<li key=${e1.id}>${e1.month}<li/><li key=${e1.id}>${e1.year}<li/><li key=${e1.id}>${e1.value}<li/>`;
+  }
+)}<lu/>
+
+
+
+for (let i = 0; i < data.investments.length; i++) {
+      for (let j = 0; j < data.reports.length; j++) {
+        if (data.reports[j].investmentId === data.investments[i].id) {
+          arrFacoes.push(data.reports[j].value)
+          
+          if (data.reports[j].month == 1) { variacaoM.push(0.00) }
+          else { variacaoM.push((((arrFacoes[j] - arrFacoes[j - 1]) / arrFacoes[j - 1]) * 100).toFixed(2)) }
+        }
+      }
+      variacaoT.push((((arrFacoes[arrFacoes.length - 1] - arrFacoes[0]) / arrFacoes[0]) * 100).toFixed(2));
+    }
+  }
+
+
+  for (let i = 0; i < data.investments.length; i++) {
+  for (let j = 0; j < data.reports.length; j++) {
+    if (data.reports[j].investmentId === data.investments[i].id) {
+      if (data.reports[j].month == 1) { variacaoM.push(0.00) }
+      else { variacaoM.push((((arrFacoes[j] - arrFacoes[j - 1]) / arrFacoes[j - 1]) * 100).toFixed(2)) }
+    }
+  }
+}
+
+    for (let i = 0; i < data.investments.length; i++) {
+      arrReset = []
+      for (let j = 0, k = 0; j < data.reports.length; j++) {
+        if (data.reports[j].investmentId === data.investments[i].id) {
+          arrFacoes.push(data.reports[k].value)
+          arrReset.push(data.reports[k].value)
+          if (data.reports[k].month == 1) { variacaoM.push(0.00) }
+          else { variacaoM.push((((arrFacoes[k] - arrFacoes[k - 1]) / arrFacoes[k - 1]) * 100).toFixed(2)) }
+       k++;
+        }
+      }
+      arrReset.sort((A, B))
+      for (let index = 0; index < arrReset.length; index++) {
+      }
+      variacaoT.push((((arrFacoes[arrFacoes.length - 1] - arrFacoes[0]) / arrFacoes[0]) * 100).toFixed(2));
+    }

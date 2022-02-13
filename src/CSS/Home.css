@@ -1,0 +1,16 @@
+.data{
+    display:flex;
+    flex: 1 1 auto;
+    
+}
+.conteiner{
+    display:flex;
+    
+}
+.valor{
+    display:flex;
+    align-items:end;
+    flex: 1 1 auto;
+    justify-content: center;
+    
+}
