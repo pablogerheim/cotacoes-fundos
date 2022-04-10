@@ -1,4 +1,4 @@
-export const data = {
+const data = {
   investments: [
     {
       id: '3176856a-82cf-4ce9-8803-c65107c7ad5e',
@@ -620,4 +620,52 @@ export const data = {
     },
   ],
 };
+const mes = [
+  '',
+  'jan',
+  'fev',
+  'mar',
+  'abr',
+  'mai',
+  'jun',
+  'jul',
+  'ago',
+  'set',
+  'out',
+  'nov',
+  'dez',
+]
 
+let arrAcoes = []
+let ordenado = []
+let variacaoT = []
+let variacaoM = []
+function sortData() {
+  ordenado = data.reports.sort((a, b) => a.investmentId > b.investmentId ? 1 : a.investmentId < b.investmentId ? -1 : (a.month > b.month ? 1 : a.month < b.month ? -1 : 0))
+}
+sortData();
+
+function rendTotal() {
+
+  for (let i = 0; i < data.investments.length; i++) {
+    for (let j = 0; j < data.reports.length; j++) {
+      if (data.reports[j].investmentId === data.investments[i].id) {
+        arrAcoes.push(data.reports[j].value)
+      }
+    }
+    variacaoT.push((((arrAcoes[arrAcoes.length - 1] - arrAcoes[0]) / arrAcoes[0]) * 100).toFixed(2));
+  }
+
+  for (let i = 0; i < data.investments.length; i++) {
+    let k = 0
+    for (let j = 0; j < ordenado.length; j++) {
+      if (ordenado[j].investmentId === data.investments[i].id) {
+        k = j + 12
+        if (j === 0 || k % 12 === 0) { variacaoM.push(0.00) }
+        else { variacaoM.push((((ordenado[j].value) * 100) / ordenado[j - 1].value) - 100) }
+      }
+    }
+  }
+}
+rendTotal()
+export { data, variacaoT, ordenado, variacaoM, mes }

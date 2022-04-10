@@ -1,65 +1,64 @@
-import { data } from '../data/data';
-import '../CSS/Home.css';
+import { data, variacaoT, ordenado, variacaoM, mes } from "../data/data";
 
-
-export function Name() {
-  let arrAcoes = []
-  let ordenado = []
-  let variacaoT = []
-  let variacaoM = []
-  function sortData() {
-    ordenado = data.reports.sort((a, b) => a.investmentId > b.investmentId ? 1 : a.investmentId < b.investmentId ? -1 : (a.month>b.month ? 1: a.month<b.month ? -1: 0))
+export function Home() {
+  let x = -1;
+  function color(params) {
+    let sty = "text-green-700";
+    if (params < 0) {
+      sty = "text-red-700";
+    }
+    if (params == 0) {
+      sty = "";
+    }
+    return sty;
   }
-  sortData();
-
-  function rendTotal() {
-
-    for (let i = 0; i < data.investments.length; i++) {
-      for (let j = 0; j < data.reports.length; j++) {
-        if (data.reports[j].investmentId === data.investments[i].id) {
-          arrAcoes.push(data.reports[j].value)
-        }
-      }
-      variacaoT.push((((arrAcoes[arrAcoes.length - 1] - arrAcoes[0]) / arrAcoes[0]) * 100).toFixed(2));
-    }
-
-    for (let i = 0; i < data.investments.length; i++) {
-      let k = 0
-      for (let j = 0; j < ordenado.length; j++) {
-        if (ordenado[j].investmentId === data.investments[i].id) {
-          k=j+12
-          if (j === 0 || k%12 === 0 ) { variacaoM.push(0.00)
-            console.log(variacaoM)
-            console.log(ordenado) }
-          else {
-            variacaoM.push((((ordenado[j].value)*100)/ ordenado[j - 1].value) - 100)
-          }
-        }
-       // console.log(variacaoM[j] + "   " + variacaoM.length)
-      }
-    }
+  function formataMes(e1) {
+    return mes[e1.month];
+  }
+  function variacaoValor(params) {
+    return (params * 10).toFixed(2).replace(/\./g, ",");
   }
 
-  rendTotal()
-  console.log(variacaoM)
-let x = -1
- 
-
- 
-  // 
-  // eslint-disable-next-line no-unused-expressions
   return (
     <>
       {data.investments.map((e, i) => {
-        return (<div key={e.id} ><h2>{e.description}</h2><h2> Variação Total: {variacaoT[i]}%</h2><div>{ordenado.map((e1) => {
-          if (e1.investmentId === e.id) {x++
-            return (<lu className='conteiner'><li key={e1.id} className='valor'>{e1.month}/{e1.year}</li><li key={e1.id} className='valor' >R$ {e1.value.toFixed(2).replace(/\./g, ",")}</li><li className='valor'>{variacaoM[x].toFixed(2).replace(/\./g, ",")}%</li></lu>)
-          }
-        })}</div></div>
-        )
+        return (
+          <div key={e.id} className="border-2 border-grey-500/75 mb-2 p-2 ">
+            <h2 className="flex justify-center font-bold text-xl ">
+              {e.description}
+            </h2>
+            <h2 className="flex justify-center font-semibold">
+              Rendimento Total:{" "}
+              <p className={color(variacaoT[i])}>R${variacaoValor(variacaoT[i])}</p>
+              <h2 className={color(variacaoT[i])}> ({variacaoT[i]}%)</h2>
+            </h2>
+            <div>
+              {ordenado.map((e1) => {
+                if (e1.investmentId === e.id) {
+                  x++;
+                  return (
+                    <>
+                      <form className="conteiner flex justify-between">
+                        <div className="flex">
+                          <div key={e1.id} className="mr-6 font-mono ">
+                            {formataMes(e1)}/{e1.year}
+                          </div>
+                          <div key={e1.id} className={color(variacaoM[x])}>
+                            R$ {e1.value.toFixed(2).replace(/\./g, ",")}
+                          </div>
+                        </div>
+                        <div className={`${color(variacaoM[x])}`}>
+                          {variacaoM[x].toFixed(2).replace(/\./g, ",")}%
+                        </div>
+                      </form>
+                    </>
+                  );
+                }
+              })}
+            </div>
+          </div>
+        );
       })}
     </>
-  )
+  );
 }
-
-//<li className='valor'>Variação:{variacaoM[j].toFixed(2).replace(/\./g, ",")}%</li>
