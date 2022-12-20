@@ -28,7 +28,7 @@ export function Home() {
               {e.description}
             </h2>
             <h2 className="flex justify-center font-semibold">
-              Rendimento Total:{" "}
+              Rendimento Total:
               <p className={color(variacaoT[i])}>R${variacaoValor(variacaoT[i])}</p>
               <h2 className={color(variacaoT[i])}> ({variacaoT[i]}%)</h2>
             </h2>
@@ -38,12 +38,12 @@ export function Home() {
                   x++;
                   return (
                     <>
-                      <form className="conteiner flex justify-between">
+                      <form key={e1.id} className="conteiner flex justify-between">
                         <div className="flex">
-                          <div key={e1.id} className="mr-6 font-mono ">
+                          <div className="mr-6 font-mono ">
                             {formataMes(e1)}/{e1.year}
                           </div>
-                          <div key={e1.id} className={color(variacaoM[x])}>
+                          <div className={color(variacaoM[x])}>
                             R$ {e1.value.toFixed(2).replace(/\./g, ",")}
                           </div>
                         </div>
